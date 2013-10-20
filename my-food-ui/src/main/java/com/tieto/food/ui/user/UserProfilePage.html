@@ -1,0 +1,42 @@
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<div id="profilePage">
+		<div id="profileHeader">
+			<img src="img/profileCover.jpg" style="max-width:100% !important;"/> <img id="profileAvatar"
+				class="img-circle" src="img/superman.jpg" /> <span
+				class="headerName" wicket:id="headerNameLabel"></span>
+		</div>
+		<div id="info" class="profileInfo">
+			<h3>
+				<em>User info</em>
+			</h3>
+			<table>
+				<tr>
+					<td>First name</td>
+					<td><b><span wicket:id="name"></span></b></td>
+				</tr>
+				<tr>
+					<td>Last name</td>
+					<td><b><span wicket:id="surname"></span></b></td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td><b><span wicket:id="email"></span></b></td>
+				</tr>
+				<tr>
+
+					<td>
+						<button class="btn btn-small btn-primary" wicket:id="edit">Edit</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="profilePageEventList" class="createdEvents">
+			<h3>Created events</h3>
+			<div wicket:id="createdEventsPanel" style="width: 450px; overflow:hidden;"></div>
+		</div>
+		<div id="profilePageEventList" class="participatedEvents">
+			<h3>Participated events</h3>
+			<div wicket:id="participatedEventsPanel" style="width: 450px; overflow:hidden;"></div>
+		</div>
+	</div>
+</wicket:extend>

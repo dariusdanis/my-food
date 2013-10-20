@@ -1,0 +1,85 @@
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<div id="userRegistrationForm">
+		<h3>
+			<wicket:container wicket:id="formTitle" />
+		</h3>
+			<div id="feedback" class="alert alert-info" wicket:id="feedback">
+		</div>
+		<form wicket:id="form" id="registrationForm" class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" wicket:for="nameTF">Your Name </label>
+				<div class="controls">
+					<input class="defaul_size_input" maxlength="15"
+						data-validation-engine="validate[required]"
+						data-errormessage-value-missing="Enter your name"
+						wicket:id="nameTF" type="text" autofocus />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" wicket:for="lastNameTF">Last
+					name </label>
+				<div class="controls">
+					<input class="defaul_size_input" maxlength="20"
+						data-validation-engine="validate[required]"
+						data-errormessage-value-missing="Enter your last name"
+						wicket:id="lastNameTF" type="text" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" wicket:for="emailTF">Email </label>
+				<div class="controls">
+					<input class="defaul_size_input" maxlength="100"
+						data-validation-engine="validate[required,custom[email]]"
+						data-errormessage-value-missing="Enter your email"
+						wicket:id="emailTF" type="text" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" wicket:for="passwordTF">Password
+				</label>
+				<div class="controls">
+					<input id="password" class="defaul_size_input" maxlength="30"
+						data-validation-engine="validate[required]"
+						data-errormessage-value-missing="Enter a password"
+						wicket:id="passwordTF" type="password" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" wicket:for="confirmPasswordTF">Confirm
+					password </label>
+				<div class="controls">
+					<input class="defaul_size_input" maxlength="30"
+						data-validation-engine="validate[required,equals[password]]"
+						data-errormessage-value-missing="Repeat password"
+						data-errormessage-pattern-mismatch="Password does not match"
+						wicket:id="confirmPasswordTF" type="password" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="controls">
+					<button wicket:id="register" type="submit" class="btn btn-primary">
+						Register!</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$("#feedback").hide();
+			if ($("#feedback").text().trim().length == 0) {
+				$("#feedback").hide();
+			} else {
+				$("#feedback").show('slow');
+			}
+
+			jQuery("#registrationForm").validationEngine({
+				validationEventTrigger : "submit"
+			});
+		});
+	</script>
+</wicket:extend>

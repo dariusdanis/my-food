@@ -1,0 +1,43 @@
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	<div id="top_menu">
+		<a id="home_button" href="#" wicket:id="home"> <img
+			src="img/home.jpg" width="150" height="50" /></a>
+		<div class="right_float">
+			<img src="img/tieto_logo_light_gray.png" width="60" height="51">
+		</div>
+		
+		<div class="left_float">
+			<b>Create your own event! </b>&nbsp;&nbsp;&nbsp;&nbsp; <button
+				wicket:id="add" type="submit" value="Create Event"
+				class="btn btn-small btn-success" >Create event</button> <button wicket:id="login"
+				type="submit" value="Log in" class="btn btn-small btn-success" >Log in</button>
+
+			<div id="profileMenu" class="btn-group">
+				<a   id="linkto" class="btn btn-small dropdown-toggle" data-toggle="dropdown"
+					href="#"><span wicket:id="adminStarIcon" class="icon-star icon-black" ></span> <span id="user" wicket:id="username">	&nbsp;</span><span 
+					class="caret" style="margin-left:10px;"></span>
+				</a>				
+				<ul i class="dropdown-menu">
+					<!-- dropdown menu links -->
+					<li><a wicket:id="profile">My profile</a></li>					
+					<li><a wicket:id="manageSpam">Manage spam</a></li>
+					<li><a wicket:id="statistic">Statistic</a></li>
+					<li><a wicket:id="map">Event map</a></li>
+					<li><a wicket:id="logOut">Log out</a></li>
+				</ul>
+				
+			</div>
+			<div id="notificationPanel" wicket:id="notifications" style="color: black"></div>
+			
+		</div>
+	</div>
+	<script>
+	$(document).ready(function() {
+		if($("#user").text().trim().length == 0){
+			$("#profileMenu").hide();
+		} else{
+			$("#profileMenu").show();
+		}
+	});
+	</script>
+</wicket:panel>

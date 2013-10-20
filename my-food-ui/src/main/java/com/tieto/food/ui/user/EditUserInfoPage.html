@@ -1,0 +1,252 @@
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<div id="editProfilePage">
+		<div id="profileHeader">
+			<img src="img/profileCover.jpg" style="max-width: 100% !important;" />
+			<img id="profileAvatar" class="img-circle" src="img/superman.jpg" />
+			<span class="headerName" wicket:id="headerNameLabel"></span>
+		</div>
+
+		<div id="editPageForms">
+			<form wicket:id="form1" id="form1" class="form-horizontal">
+				<h3>Contact info</h3>
+				<div id="feedback1" class="alert alert-info" wicket:id="feedback1"></div>
+				<div class="control-group" style="margin-left: -50px;">
+					<label class="control-label" wicket:for="nameTF">Name </label>
+					<div class="controls">
+						<input class="defaul_size_input" maxlength="15"
+							data-validation-engine="validate[required]"
+							data-errormessage-value-missing="Enter your name"
+							wicket:id="nameTF" type="text" autofocus />
+					</div>
+				</div>
+
+				<div class="control-group" style="margin-left: -50px;">
+					<label class="control-label" wicket:for="lastNameTF">Last
+						name </label>
+					<div class="controls">
+						<input class="defaul_size_input" maxlength="20"
+							data-validation-engine="validate[required]"
+							data-errormessage-value-missing="Enter your last name"
+							wicket:id="lastNameTF" type="text" />
+					</div>
+				</div>
+
+				<div class="control-group" style="margin-left: -50px;">
+					<label class="control-label" wicket:for="emailTF">Email </label>
+					<div class="controls">
+						<input class="defaul_size_input" maxlength="100"
+							data-validation-engine="validate[required,custom[email]]"
+							data-errormessage-value-missing="Enter your email"
+							wicket:id="emailTF" type="text" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label style="margin-left: 40px" class="control-label" wicket:for="adminRights"> <b
+						wicket:id="adminRightsLabel"></b></label>
+					<div class="controls">
+						<input type="checkbox" wicket:id="adminRights"><br>
+					</div>
+				</div>
+				<span style="margin-left: 40px;"> I want to receive email
+					notifications:</span>
+				<div class="control-group">
+					<br />
+					<table>
+						<tr>
+							<td><label style="margin-left: 40px">About users
+									joining and leaving my events - </label></td>
+							<td><input style="margin-bottom: 7px; margin-left: 5px;"
+								type="checkbox" wicket:id="joinLeaveEventCB"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="control-group">
+				
+					<table>
+						<tr>
+							<td><label style="margin-left: 40px">About events that are happening soon - </label></td>
+							<td><input type="checkbox" style="margin-bottom: 7px; margin-left: 5px;"
+								wicket:id="upcomingEventNotificationsCB"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="control-group" style="margin-left: -140px;">
+					<div class="controls">
+						<button wicket:id="submitContInfo" type="submit"
+							class="btn btn-small btn-primary">Update info</button>
+					</div>
+				</div>
+			</form>
+
+			<form wicket:id="form2" id="form2" class="form-horizontal"
+				style="border-top: 2px solid gray; border-bottom: 2px solid gray; ">
+				<h3>Change password</h3>
+				<div id="feedback2" class="alert alert-info" wicket:id="feedback2"></div>
+				<div class="control-group">
+					<label class="control-label" wicket:for="oldPasswordTF">Current
+						password </label>
+					<div class="controls">
+						<input id="password" class="defaul_size_input" maxlength="30"
+							data-validation-engine="validate[required]"
+							data-errormessage-value-missing="Enter current password"
+							wicket:id="oldPasswordTF" type="password" />
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" wicket:for="newPasswordTF">New
+						Password </label>
+					<div class="controls">
+						<input id="newPasswordTF" class="defaul_size_input" maxlength="30"
+							data-validation-engine="validate[required]"
+							data-errormessage-value-missing="Enter new password"
+							wicket:id="newPasswordTF" type="password" />
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" wicket:for="confirmNewPasswordTF">Confirm
+						password </label>
+					<div class="controls">
+						<input class="defaul_size_input" maxlength="30"
+							data-validation-engine="validate[required,equals[newPasswordTF]]"
+							data-errormessage-value-missing="Repeat new password"
+							data-errormessage-pattern-mismatch="Password does not match"
+							wicket:id="confirmNewPasswordTF" type="password" />
+					</div>
+				</div>
+
+				<div class="control-group" style="margin-left: -140px;">
+					<div class="controls">
+						<button wicket:id="changePasswordBtn" type="submit"
+							class="btn btn-small btn-primary">Change password</button>
+					</div>
+				</div>
+			</form>
+			<form class="form-horizontal" wicket:id="eventTypeForm">
+				<h3>What event types you get notified about?</h3>
+
+				<div class="row-fluid" style="margin-left: 50px;">
+					<div class="row-fluid">
+						<select wicket:id="availableTypes" class="span2"
+							id="typeNotificationsAvailable" size="5"
+							style="float: left; width: 240px;">
+						</select>
+
+						<div class="span1">
+							<div>
+								<button wicket:id="notificationTypeAdd" id="notificationTypeAdd"
+									type="button" class="btn btn-default btn-lg">»</button>
+							</div>
+							<br />
+							<div>
+								<button wicket:id="notificationTypeRemove"
+									id="notificationTypeRemove" type="button"
+									class="btn btn-default btn-lg">«</button>
+							</div>
+						</div>
+
+						<select wicket:id="subscriptionsTypes" class="span2"
+							id="typeNotificationsSelected" size="5"
+							style="float: left; width: 240px;">
+						</select>
+					</div>
+				</div>
+			</form>
+
+			<form wicket:id="userForm" class="form-horizontal">
+				<h3>What people you get notified about?</h3>
+
+				<div class="row-fluid" style="margin-left: 50px;">
+					<div class="row-fluid">
+						<select wicket:id="availableUser" class="span2" size="5"
+							style="float: left; width: 240px;">
+						</select>
+
+						<div class="span1">
+							<div>
+								<button wicket:id="notificationUserAdd" type="button"
+									class="btn btn-default btn-lg">»</button>
+							</div>
+							<br />
+							<div>
+								<button wicket:id="notificationUserRemove" type="button"
+									class="btn btn-default btn-lg">«</button>
+							</div>
+						</div>
+
+						<select wicket:id="subscriptionsUser" class="span2" size="5"
+							style="float: left; width: 240px;">
+						</select>
+					</div>
+				</div>
+			</form>
+
+			<h3>Text triggers</h3>
+			<span style="margin-left: 50px;">Get notified about events that have specified text in title/description</span>
+			<form wicket:id="subscriptionForm">
+				<div class="row-fluid" style="margin-left: 50px;">
+					<textarea maxlength="255" class="defaul_size_textare"
+						wicket:id="textSubscription" rows="5" cols="5"></textarea>
+				</div>
+				<button style="margin-left: 50px;" wicket:id="updateSubscriptions" type="submit"
+					class="btn btn-small btn-primary">Update info</button>
+			</form>
+			<br> <br>
+
+			<form wicket:id="form3" id="form3" class="form-horizontal"
+				style="border-top: 2px solid gray;">
+				<h3>Delete profile</h3>
+				<div id="feedback3" class="alert alert-info" wicket:id="feedback3"></div>
+				<div class="control-group" style="margin-left: -10px;">
+					<label class="control-label" wicket:id="form3Label" for="password"></label>
+					<div class="controls">
+						<input class="defaul_size_input" maxlength="30"
+							data-validation-engine="validate[required]"
+							data-errormessage-value-missing="Enter password"
+							wicket:id="password" type="password" />
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls" style="margin-left: 50px;">
+						<button wicket:id="deleteAccountBtn" type="submit"
+							class="btn btn-small btn-primary">Delete profile</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".alert").hide();
+			if ($("#feedback1").text().trim().length == 0) {
+				$("#feedback1").hide();
+			} else {
+				$("#feedback1").show('slow');
+			}
+			if ($("#feedback2").text().trim().length == 0) {
+				$("#feedback2").hide();
+			} else {
+				$("#feedback2").show('slow');
+			}
+			if ($("#feedback3").text().trim().length == 0) {
+				$("#feedback3").hide();
+			} else {
+				$("#feedback3").show('slow');
+			}
+			jQuery("#form1").validationEngine({
+				validationEventTrigger : "submit",
+				scroll : false
+			});
+			jQuery("#form2").validationEngine({
+				validationEventTrigger : "submit",
+				scroll : false
+			});
+			jQuery("#form3").validationEngine({
+				validationEventTrigger : "submit",
+				scroll : false
+			});
+		});
+	</script>
+</wicket:extend>

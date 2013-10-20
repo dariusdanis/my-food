@@ -1,0 +1,35 @@
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	<div class="comments">
+		<div class="comment">
+			<div class="author">
+				<a href="#" wicket:id="linkToProfile">
+					<label wicket:id="author"></label>
+				</a>
+				<span> <label wicket:id="date"></label> </span>
+				<span> <label wicket:id="time"></label> </span>
+			</div>
+			<div class="post">
+				<label wicket:id="message"></label>
+				
+				<a href="#" wicket:id="deleteComment">
+					<span class="icon-trash" style=" position:absolute; 
+					top: 5px; right:10px"></span>
+				</a>
+				<a href="#" wicket:id="editComment">
+					<span class="icon-pencil" style=" position:absolute; 
+					top: 5px; right:25px"></span>			
+				</a>
+				<form wicket:id="form">
+				<textarea wicket:id="editTextAre" rows="5" 
+				cols="5" class="defaul_size_comment_textare" maxlength="255"></textarea>
+				
+					<a href="#" wicket:id="subbmit">
+						<span class="icon-ok" style=" position:absolute; 
+							top: 120px; right:40px"></span>		
+					</a>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+</wicket:panel>

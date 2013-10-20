@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet author="darius" id="1">
+		<createTable tableName="Events">
+			<column name="eventId" autoIncrement="true" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="createdBy" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="description" type="varchar(255)">
+			</column>
+			<column name="eventDate" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="title" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="eventPlaceFk" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="eventTypeFk" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="eventUpcomingNotificationSent" type="boolean"
+				defaultValueBoolean="false">
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="darius" id="2">
+		<createTable tableName="Places">
+			<column name="placeId" autoIncrement="true" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="place" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="orExist" type="boolean" defaultValueBoolean="true">
+				<constraints nullable="false" />
+			</column>
+			<column name="latitude" type="DOUBLE PRECISION">
+				<constraints nullable="false" />
+			</column>
+			<column name="longitude" type="DOUBLE PRECISION">
+				<constraints nullable="false" />
+			</column>
+			<column name="address" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="darius" id="3">
+		<createTable tableName="Types">
+			<column name="typeId" autoIncrement="true" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="type" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="darius" id="4">
+		<addForeignKeyConstraint baseColumnNames="eventPlaceFk"
+			baseTableName="Events" constraintName="eventPlaceForeignConstraint"
+			referencedColumnNames="placeId" referencedTableName="Places" />
+	</changeSet>
+
+	<changeSet author="darius" id="5">
+		<addForeignKeyConstraint baseColumnNames="eventTypeFk"
+			baseTableName="Events" constraintName="eventTypeForeignConstraint"
+			referencedColumnNames="typeId" referencedTableName="Types" />
+	</changeSet>
+
+	<changeSet author="darius" id="6">
+		<createTable tableName="Users">
+			<column name="userId" autoIncrement="true" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="admin" type="boolean" defaultValueBoolean="false">
+			</column>
+			<column name="email" type="varchar(100)">
+			</column>
+			<column name="joinDate" type="timestamp">
+			</column>
+			<column name="name" type="varchar(100)">
+			</column>
+			<column name="password" type="varchar(100)">
+			</column>
+			<column name="surname" type="varchar(100)">
+			</column>
+			<column name="orExist" type="boolean" defaultValueBoolean="true">
+			</column>
+			<column name="sendJoinLeaveNotifications" type="boolean"
+				defaultValueBoolean="false">
+			</column>
+			<column name="sendUpcomingEventNotifications" type="boolean"
+				defaultValueBoolean="false">
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="darius" id="7">
+		<createTable tableName="userJoinEvent">
+			<column autoIncrement="true" name="id" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="userId" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="eventId" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="darius" id="8">
+		<addForeignKeyConstraint baseColumnNames="userId"
+			baseTableName="userJoinEvent" constraintName="userIdEventForeignConstraint"
+			referencedColumnNames="userId" referencedTableName="Users" />
+	</changeSet>
+
+	<changeSet author="darius" id="9">
+		<addForeignKeyConstraint baseColumnNames="eventId"
+			baseTableName="userJoinEvent" constraintName="eventIdEventForeignConstraint"
+			referencedColumnNames="eventId" referencedTableName="Events" />
+	</changeSet>
+
+	<changeSet author="darius" id="10">
+		<insert tableName="Types">
+			<column name="typeId" value="1" />
+			<column name="type" value="On place" />
+		</insert>
+		<insert tableName="Types">
+			<column name="typeId" value="2" />
+			<column name="type" value="Take out" />
+		</insert>
+		<insert tableName="Types">
+			<column name="typeId" value="3" />
+			<column name="type" value="Restaurant" />
+		</insert>
+	</changeSet>
+
+	<changeSet author="darius" id="11">
+		<createTable tableName="Facebook">
+			<column name="id" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="facebookId" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="darius" id="12">
+		<createTable tableName="TypeSubscription">
+			<column autoIncrement="true" name="subscriptionId" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="userFk" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="typeFk" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint baseColumnNames="userFk"
+			baseTableName="TypeSubscription" constraintName="userTypeForeignConstraint"
+			referencedColumnNames="userId" referencedTableName="Users" />
+		<addForeignKeyConstraint baseColumnNames="typeFk"
+			baseTableName="TypeSubscription" constraintName="typeTypeForeignConstraint"
+			referencedColumnNames="typeId" referencedTableName="Types" />
+	</changeSet>
+
+	<changeSet author="darius" id="13">
+		<createTable tableName="Notification">
+			<column autoIncrement="true" name="notificationId" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="eventFk" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="userFk" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint baseColumnNames="eventFk"
+			baseTableName="Notification" constraintName="eventNotificationForeignConstraint"
+			referencedColumnNames="eventId" referencedTableName="Events" />
+		<addForeignKeyConstraint baseColumnNames="userFk"
+			baseTableName="Notification" constraintName="userNotificationForeignConstraint"
+			referencedColumnNames="userId" referencedTableName="Users" />
+	</changeSet>
+	<changeSet author="TomasRupsys" id="14">
+		<createTable tableName="TextSubscription">
+			<column autoIncrement="true" name="subscriptionId" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="textLine" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="subscriberFk" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint baseColumnNames="subscriberFk"
+			baseTableName="TextSubscription" constraintName="userTextForeignConstraint"
+			referencedColumnNames="userId" referencedTableName="Users" />
+	</changeSet>
+
+	<changeSet author="TomasRupsys" id="15">
+		<createTable tableName="UserSubscription">
+			<column autoIncrement="true" name="subscriptionId" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="subscriberFk" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="subscribedUserFk" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint baseColumnNames="subscriberFk"
+			baseTableName="UserSubscription" constraintName="userUserSubForeignConstraint"
+			referencedColumnNames="userId" referencedTableName="Users" />
+		<addForeignKeyConstraint baseColumnNames="subscribedUserFk"
+			baseTableName="UserSubscription" constraintName="subscribedUserSubForeignConstraint"
+			referencedColumnNames="userId" referencedTableName="Users" />
+	</changeSet>
+
+	<changeSet author="TomasRupsys" id="17">
+		<addColumn tableName="Events">
+			<column name="timesReportedAsSpam" type="BIGINT(20)"
+				defaultValueNumeric="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="isSpam" type="boolean" defaultValueBoolean="false" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="TomasRupsys" id="18">
+		<createTable tableName="userReportEvent">
+			<column autoIncrement="true" name="id" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="userId" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="eventId" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="TomasRupsys" id="19">
+		<addForeignKeyConstraint baseColumnNames="userId"
+			baseTableName="userReportEvent" constraintName="userIdEventReportForeignConstraint"
+			referencedColumnNames="userId" referencedTableName="Users" />
+	</changeSet>
+
+	<changeSet author="TomasRupsys" id="20">
+		<addForeignKeyConstraint baseColumnNames="eventid"
+			baseTableName="userReportEvent" constraintName="eventIdEventReportForeignConstraint"
+			referencedColumnNames="eventId" referencedTableName="Events" />
+	</changeSet>
+
+	<changeSet id="21" author="Darius">
+		<createTable tableName="Comment">
+			<column autoIncrement="true" name="commentId" type="BIGINT(20)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="comment" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="commentDate" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="userFk" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="eventFk" type="BIGINT(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint baseColumnNames="userFk"
+			baseTableName="Comment" constraintName="userCommentForeignConstraint"
+			referencedColumnNames="userId" referencedTableName="Users" />
+		<addForeignKeyConstraint baseColumnNames="eventFk"
+			baseTableName="Comment" constraintName="eventCommentForeignConstraint"
+			referencedColumnNames="eventId" referencedTableName="Events" />
+	</changeSet>
+</databaseChangeLog>

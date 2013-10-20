@@ -1,0 +1,72 @@
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<div id="loginForm">
+
+		<div class="alert alert-info" id="feedback" wicket:id="feedback"></div>
+
+		<form wicket:id="form" id="loginForm" class="form-horizontal">
+			<table>
+				<tr>
+					<td class="signIn">
+						<div class="control-group">
+							<h3>
+								<wicket:container wicket:id="formTitle" />
+							</h3>
+							<label class="control-label" wicket:for="emailTF">Email</label>
+							<div class="controls">
+								<input class="defaul_size_input" maxlength="100"
+									data-validation-engine="validate[required]"
+									data-errormessage-value-missing="Enter your email"
+									wicket:id="emailTF" type="text" autofocus />
+							</div>
+						</div>
+
+						<div class="control-group">
+
+							<label class="control-label" wicket:for="passwordTF">Password</label>
+							<div class="controls">
+								<input class="defaul_size_input" maxlength="30"
+									data-validation-engine="validate[required]"
+									data-errormessage-value-missing="Enter your password"
+									wicket:id="passwordTF" type="password" />
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button wicket:id="login" type="submit" class="btn btn-primary">
+									Login</button>
+								<a href="#" wicket:id="fb"> <img href="#"
+									src="img/fb-login.png" width="185" height="50" />
+								</a>
+							</div>
+							<br>
+
+						</div>
+					</td>
+					<td>
+						<div class="notMember">
+							<h3>Don't have an account?</h3>
+							<span> Well it's about time to get one! <br /> It's free
+								and only takes a minute.
+							</span><br />
+							<button wicket:id="register" class="btn">Register</button>
+
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$("#feedback").hide();
+			if ($("#feedback").text().trim().length == 0) {
+				$("#feedback").hide();
+			} else {
+				$("#feedback").show('slow');
+			}
+			jQuery("#loginForm").validationEngine({
+				validationEventTrigger : "submit"
+			});
+		});
+	</script>
+</wicket:extend>

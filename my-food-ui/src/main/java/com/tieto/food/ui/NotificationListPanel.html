@@ -1,0 +1,16 @@
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	<div wicket:id="markupContainer">
+		<span id="notificationLink" wicket:id="notificationLink">
+			<button id="notificationButton" class="btn btn-small btn-info">
+				<span wicket:id="countlbl"></span>
+			</button>
+		</span>
+		<div>
+			<table class="alert alert-info" id="notificationTable">
+				<tr wicket:id="notificationList">
+					<a href="#"><td wicket:id="eventLink"><div class="linkItem" wicket:id="eventTitle"></div></td></a>
+				</tr>
+			</table>
+		</div>
+	</div>
+</wicket:panel>

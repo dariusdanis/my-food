@@ -1,0 +1,352 @@
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<div id="addEventForm">
+		<h3>
+			<wicket:container wicket:id="h3Lable" />
+		</h3>
+
+		<div id="addEventPageMap"></div>
+
+		<div wicket:id="feedback"></div>
+
+		<form id="eventForm" wicket:id="form" class="form-horizontal">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label" wicket:for="inputTitle">Title</label>
+					<div class="controls">
+						<input id='title' class="defaul_size_input"
+							data-validation-engine="validate[required]"
+							data-errormessage-value-missing="A title would be lovely."
+							wicket:id="inputTitle" type="text" />
+					</div>
+				</div>
+				<div class="control-group">
+					<div id="datetimepicker1" class="input-append date">
+						<label class="control-label" wicket:for="inputDate">Event
+							date</label>
+						<div class="controls">
+							<input id="dateInput" data-validation-engine="validate[required]"
+								data-errormessage-value-missing="Please enter a valid date."
+								data-format="yyyy-MM-dd hh:mm" type="text" wicket:id="inputDate"></input>
+							<span class="add-on"> <i data-time-icon="icon-time"
+								data-date-icon="icon-calendar"> </i>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<script type="text/javascript">
+					$(function() {
+						$('#datetimepicker1').datetimepicker({
+							language : 'pt-BR'
+						});
+					});
+				</script>
+
+				<div class="control-group">
+					<label class="control-label" wicket:for="placeSelector">Place
+						name</label>
+					<div class="controls">
+						<input id='placeSelector' class="defaul_size_input"
+							data-validation-engine="validate[required]"
+							data-errormessage-value-missing="Where will your event take place?"
+							wicket:id="placeSelector" type="text" />
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" wicket:for="placeAddress">Place
+						address</label>
+					<div class="controls">
+						<input id='placeAddress' class="defaul_size_input"
+							data-validation-engine="validate[required]"
+							data-errormessage-value-missing="Where will your event take place?"
+							wicket:id="placeAddress" type="text" placeholder="" />
+					</div>
+
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" wicket:for="typeSelector">Type</label>
+					<div class="controls">
+						<select id="ms6" style="width: 260px;"
+							data-validation-engine="validate[required] "
+							data-errormessage-value-missing="What type of event do you have in mind?"
+							wicket:id="typeSelector">
+						</select>
+					</div>
+				</div>
+
+
+				<div class="control-group">
+					<label class="control-label" wicket:for="inputDescription">Description</label>
+					<div class="controls">
+						<textarea maxlength="255" class="defaul_size_textare"
+							wicket:id="inputDescription" rows="5" cols="5"></textarea>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<div class="controls">
+						<a href="#" wicket:id="showInvitationLink"
+							class="btn btn-small btn-longer">Invite users</a>
+					</div>
+				</div>
+
+				<div class="modal hide fade" wicket:id="invitationModal"
+					hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<a wicket:id="closeButton" type="button" class="close" data-dismiss="modal">&times;</a>
+								<h4 class="modal-title">Send Invitations</h4>
+							</div>
+							<div class="modal-body" style="height: 200px">
+
+								<div class="control-group">
+									<label class="control-label" wicket:for="userSelector">Users</label>
+									<div class="controls">
+										<select id="ms8" style="width: 300px;"
+											wicket:id="userSelector">
+										</select>
+									</div>
+								</div>
+								<script type="text/javascript">
+									$(document).ready(function() {
+										var ms6 = $('#ms8').magicSuggest({
+											allowFreeEntries : true,
+											typeDelay : 1,
+											resultAsString : true,
+											maxSelection : 10,
+											name : 'userSelector',
+											selectionStacked : true,
+											selectionPosition : 'bottom',
+											maxSuggestions : 6,
+											emptyText : ""
+										});
+									});
+								</script>
+								<div class="control-group" align="center">
+									<a href="#" wicket:id="saveButton"
+										class="btn btn-small btn-longer">Save</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div style="display: none;" id="infoPanel">
+					<input wicket:id="lng" id="lng" type="text" /> <input
+						wicket:id="lat" id="lat" type="text" />
+				</div>
+
+				<div class="control-group">
+					<div class="controls">
+						<button wicket:id="add" type="submit" class="btn btn-primary">
+							Submit</button>
+						<wicket:child>
+						</wicket:child>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+
+	<script type="text/javascript">
+		var geocoder = new google.maps.Geocoder();
+
+		function geocodePosition(pos) {
+			geocoder
+					.geocode(
+							{
+								latLng : pos
+							},
+							function(responses) {
+								if (responses && responses.length > 0) {
+									updateMarkerAddress(responses[0].formatted_address);
+								} else {
+									updateMarkerAddress('Cannot determine address at this location.');
+								}
+							});
+		}
+
+		function updateMarkerPosition(latLng) {
+			document.getElementById('lng').value = latLng.lng()
+			document.getElementById('lat').value = latLng.lat()
+		}
+
+		function updateMarkerAddress(str) {
+			document.getElementById('placeAddress').value = str;
+		}
+
+		function initialize(lat, lng) {
+			var latLng = new google.maps.LatLng(lat, lng);
+
+			var map = new google.maps.Map(document
+					.getElementById('addEventPageMap'), {
+				zoom : 8,
+				center : latLng,
+				mapTypeId : google.maps.MapTypeId.ROADMAP
+			});
+
+			var marker = new google.maps.Marker({
+				position : latLng,
+				title : 'Point',
+				map : map,
+				draggable : true,
+				navigationControl : true
+
+			});
+
+			var input = (document.getElementById('placeAddress'));
+			var searchBox = new google.maps.places.SearchBox(input);
+
+			google.maps.event.addListener(searchBox, 'places_changed',
+					function() {
+						var places = searchBox.getPlaces();
+
+						var bounds = new google.maps.LatLngBounds();
+						for ( var i = 0, place; place = places[i]; i++) {
+							var image = {
+								url : place.icon,
+								size : new google.maps.Size(71, 71),
+								origin : new google.maps.Point(0, 0),
+								anchor : new google.maps.Point(17, 34),
+								scaledSize : new google.maps.Size(25, 25)
+							};
+							marker.setPosition(place.geometry.location);
+							updateMarkerPosition(marker.getPosition());
+							bounds.extend(place.geometry.location);
+						}
+
+						map.fitBounds(bounds);
+					});
+
+			google.maps.event.addListener(map, 'bounds_changed', function() {
+				var bounds = map.getBounds();
+				searchBox.setBounds(bounds);
+			});
+
+			updateMarkerPosition(latLng);
+			geocodePosition(latLng);
+
+			google.maps.event.addListener(map, 'click', function(event) {
+				marker.setPosition(event.latLng);
+				updateMarkerPosition(marker.getPosition());
+				geocodePosition(marker.getPosition());
+			});
+
+			google.maps.event.addListener(marker, 'drag', function() {
+				updateMarkerPosition(marker.getPosition());
+			});
+
+			google.maps.event.addListener(marker, 'dragend', function() {
+				geocodePosition(marker.getPosition());
+			});
+
+		}
+
+		$(document)
+				.ready(
+						function() {
+							var ms6 = $('#ms6').magicSuggest({
+								allowFreeEntries : false,
+								typeDelay : 1,
+								name : "ps",
+								resultAsString : true,
+								maxSelection : 1,
+								name : 'typeSelector',
+								emptyText : ""
+
+							});
+
+							$(window).keydown(function(event) {
+								if (event.keyCode == 13) {
+									event.preventDefault();
+									return false;
+								}
+							});
+
+							$("#password").tooltip();
+
+							$('#eventForm')
+									.submit(
+											function() {
+												// Date validation check 
+												var today = new Date(new Date()
+														.getTime());
+												var val = $('#dateInput').val()
+														.substring(0, 10);
+												var tempDate = new Date(Date
+														.parse(val));
+												var hours = $('#dateInput')
+														.val()
+														.substring(11, 13);
+												var minutes = $('#dateInput')
+														.val().substring(14);
+												var selectedTime = new Date(
+														tempDate.getFullYear(),
+														tempDate.getMonth(),
+														tempDate.getDate(),
+														hours, minutes, 00, 0);
+												if (selectedTime < today) {
+													$('#dateInput').val("");
+												}
+
+												if ($('[name="typeSelector"]')
+														.val() == "[]") {
+													$('[name="typeSelector"]')
+															.val("[\"\"]");
+												}
+												if ($('[name="typeSelector"]')
+														.val() == "[\"\"]") {
+													$("#ms-input-0")
+															.attr(
+																	"data-validation-engine",
+																	"validate[required]");
+													$("#ms-input-0")
+															.attr(
+																	"data-errormessage-value-missing",
+																	"Choose the type of the event.");
+												} else {
+													$("#ms-input-0")
+															.attr(
+																	"data-validation-engine",
+																	"");
+													$("#ms-input-0")
+															.attr(
+																	"data-errormessage-value-missing",
+																	"");
+												}
+												if ($('[name="placeSelector"]')
+														.val() == "[]") {
+													$('[name="placeSelector"]')
+															.val("[\"\"]");
+												}
+												if ($('[name="placeSelector"]')
+														.val() == "[\"\"]") {
+													$("#ms-input-1")
+															.attr(
+																	"data-validation-engine",
+																	"validate[required]");
+													$("#ms-input-1")
+															.attr(
+																	"data-errormessage-value-missing",
+																	"Where do you want to go ?");
+												} else {
+													$("#ms-input-1")
+															.attr(
+																	"data-validation-engine",
+																	"");
+													$("#ms-input-1")
+															.attr(
+																	"data-errormessage-value-missing",
+																	"");
+												}
+											});
+
+							jQuery("#eventForm").validationEngine({
+								validationEventTrigger : "submit"
+							});
+						});
+	</script>
+</wicket:extend>

@@ -1,0 +1,193 @@
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	<div class="event_list_item">
+		<a class="danger" style="text-decoration: none; " href="#" wicket:id="eventTitleA"> <b><span
+				id="titleText" wicket:id="eventTitle"></span></b>
+		</a>
+
+		<table class="table table-hover">
+			<tr>
+				<td class="aboutEvent">
+
+					<div class="right">
+
+						<div>
+							<div class="title">
+								<br /> <b>When? - </b> <span wicket:id="eventDate"></span><br />
+								<b>Where? - </b> <span wicket:id="eventPlace"></span> (<span
+									wicket:id="eventType"></span>)
+							</div>
+							<br /> <b>Created by: </b> <a href="#" wicket:id="profileLink"><span
+								wicket:id="eventUsername"></span></a><br /> <br />
+
+							<div class="eventDescriptionText" wicket:id="eventDescription">Description</div>
+						</div>
+					</div>
+				</td>
+				<td class="evntImage">
+					<div>
+						<img class="listImage" src="img/food4.jpg" width="500"
+							height="150">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div id="event_buttons">
+
+						<!-- Join/Leave button -->
+						<div class="left">
+							<form wicket:id="joinLeaveForm" id="joinLeaveButton" class="left">
+								<button wicket:id="joinLeaveButton"
+									class="btn btn-small btn-success">
+									<wicket:container wicket:id="label" />
+								</button>
+							</form>
+						</div>
+
+						<!-- Event edit -->
+						<div class="left notPublic">
+							<a href="#" id="eventEditButton" wicket:id="eventEditButton"
+								class="left">
+								<button class="btn btn-small ">Edit</button>
+							</a>
+						</div>
+
+						<!-- Show participants -->
+						<div wicket:id="addItems" class="left participantsField">
+							<form wicket:id="showParticipantsForm">
+								<a href="#" wicket:id="showParticipantsLink">
+									<button id="participantsButton" wicket:id="participantsButton"
+										class="btn btn-small btn-longer">
+										<i class="icon-user"></i>
+										<wicket:container wicket:id="participantsLabel" />
+									</button>
+								</a>
+							</form>
+						</div>
+
+						<!-- Invite users -->
+						<div class="left notPublic">
+							<form id="eventForm" wicket:id="form" class="form-horizontal">
+								<fieldset>
+									<a href="#" wicket:id="showInvitationLink">
+										<button class="btn btn-small btn-longer">Invite more
+											users!</button>
+									</a>
+
+									<div class="modal hide fade" wicket:id="invitationModal"
+										hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Send Invitations</h4>
+												</div>
+												<div class="modal-body" style="height: 200px;">
+
+													<div class="control-group">
+														<label class="control-label" wicket:for="userSelector">Users</label>
+														<div class="controls">
+															<select class="ms9" style="width: 300px;"
+																wicket:id="userSelector">
+															</select>
+
+														</div>
+													</div>
+													<script type="text/javascript">
+														$(document)
+																.ready(
+																		function() {
+																			var ms1 = $(
+																					'.ms9')
+																					.magicSuggest(
+																							{
+																								allowFreeEntries : true,
+																								typeDelay : 1,
+																								resultAsString : true,
+																								maxSelection : 10,
+																								name : 'userSelector',
+																								selectionStacked : true,
+																								selectionPosition : 'bottom',
+																								maxSuggestions : 6,
+																								emptyText : ""
+																							});
+
+																		});
+													</script>
+													<div class="control-group" align="center">
+														<button wicket:id="saveButton" type="submit"
+															class="btn btn-small btn-longer">Send</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</fieldset>
+							</form>
+						</div>
+
+						<!-- Report event -->
+						<div class="left notPublic" wicket:id="reportingContainer">
+							<span wicket:id="reportingModal" class="" style="margin-left: 10px;">
+							</span> <a href="#"
+								class="left" wicket:id="reportingLink">
+								<button  style="margin-left: 10px" class="btn btn-small btn-longer">
+									<i class="icon-flag"></i> Report
+								</button>
+							</a>
+						</div>
+
+					</div>
+				</td>
+			</tr>
+		</table>
+
+		<div class="modal fade" wicket:id="showParticipants">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							hidden="true">&times;</button>
+						<h4 class="modal-title">Participants</h4>
+					</div>
+					<div class="modal-body">
+						<div wicket:id="showItems">
+							<div class="item" wicket:id="item">
+								<div class="itemText">
+									<a href="#" title="Remove user" 
+										wicket:id="removeButton"> <i class="icon-remove"></i>
+									</a> <a href="#" wicket:id="text"><span wicket:id="name">
+									</span></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" wicket:id="showReportEventAsSpam">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							hidden="true">&times;</button>
+						<h4 class="modal-title">Report this event</h4>
+					</div>
+					<div class="modal-body">Are you sure you would like to report
+						this event as inappropriate for My Food?</div>
+					<div class="modal-footer">
+						<button wicket:id="submitSpam" type="submit"
+							class="btn btn-default">Yes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</wicket:panel>

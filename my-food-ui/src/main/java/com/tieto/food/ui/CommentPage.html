@@ -1,0 +1,23 @@
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<form class="form-horizontal" wicket:id="commentForm">
+		<div class="control-group" wicket:id="commentDiv">
+			<div class="controls">
+				<span wicket:id="comments"> <span wicket:id="commentItem"></span>
+				</span>
+
+			</div>
+		</div>
+
+
+		<div class="control-group">
+			<div class="controls">
+				<textarea wicket:id="commentArea" maxlength="255"
+					class="defaul_size_textare" rows="5" cols="5"></textarea>
+				<button wicket:id="addNewComment" type="submit"
+					class="btn btn-primary">Add row</button>
+			</div>
+		</div>
+	</form>
+
+
+</wicket:extend>
